@@ -1,21 +1,54 @@
 import { ReactNode } from "react";
-import { FieldValues } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 
-interface CheckboxProps {
+type RadioVariant = "vertical" | "horizontal";
+
+interface IOption {
+  value: string;
+  label: string;
+}
+
+enum GenderEnum {
+  female = "female",
+  male = "male",
+}
+
+interface IFormInputs {
+  message: string;
+  agree: boolean;
+  gender: GenderEnum;
+}
+
+interface IRadioProps {
+  label: string;
+  name: string;
+  variant?: RadioVariant;
+  defaultValue?: object;
+  control: Control<IFormInputs>;
+  radioList: Array<IOption>;
+}
+
+interface ICheckboxProps {
   label?: string;
   controls: FieldValues;
   disabled?: boolean;
 }
 
-interface SwitchProps extends CheckboxProps {}
+interface ISwitchProps extends ICheckboxProps {}
 
-interface TextAreaProps {
+interface ITextAreaProps {
   label?: string;
   placeholder?: string;
   controls: FieldValues;
   errorMsg: ReactNode;
   disabled?: boolean;
-  asterick?: boolean;
+  asterisk?: boolean;
 }
 
-export type { TextAreaProps, SwitchProps, CheckboxProps };
+export type {
+  ITextAreaProps,
+  ISwitchProps,
+  ICheckboxProps,
+  IOption,
+  IRadioProps,
+};

@@ -1,14 +1,14 @@
 import { Textarea } from "@mantine/core";
-import { TextAreaProps } from "../../types/componentsProps.tsx";
+import { ITextAreaProps } from "../../types/componentsProps.tsx";
 
 const ITextarea = ({
   label,
   placeholder = undefined,
   controls,
   errorMsg,
-  asterick = false,
+  asterisk = false,
   disabled = false,
-}: TextAreaProps) => {
+}: ITextAreaProps) => {
   return (
     <div className="component">
       <Textarea
@@ -20,7 +20,7 @@ const ITextarea = ({
         label={label}
         placeholder={placeholder}
         disabled={disabled}
-        withAsterisk={asterick}
+        withAsterisk={asterisk}
         error={errorMsg}
       />
     </div>

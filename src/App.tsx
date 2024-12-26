@@ -1,40 +1,65 @@
-import { useForm } from "react-hook-form";
-import TextArea from "./components/TextArea/Textarea.tsx";
-import Checkbox from "./components/Checkbox/Checkbox.tsx";
 import "./App.css";
+import LoginForm from "./components/LoginForm/LoginForm.tsx";
+
+enum GenderEnum {
+  female = "female",
+  male = "male",
+}
+
+/* interface IFormInputs {
+  message: string;
+  agree: boolean;
+  gender: GenderEnum;
+} */
 
 function App() {
-  const {
+  /* const {
     register,
     control,
-    formState: { errors, isValid },
     handleSubmit,
-  } = useForm({
+    formState: { errors },
+  } = useForm<IFormInputs>({
     mode: "onChange",
-    criteriaMode: "all",
     defaultValues: {
-      mess: "GGGGG",
-      sw: true,
+      message: undefined,
+      agree: false,
     },
   });
-  return (
-    <>
+
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
+
+  const genderList = [
+    { value: GenderEnum.female, label: "Ж" },
+    { value: GenderEnum.male, label: "М" },
+  ]; */
+
+  return <LoginForm />;
+  /* <form onSubmit={handleSubmit(onSubmit)}>
       <TextArea
-        label="Message"
-        placeholder="Hi!"
-        controls={register("mess", {
+        label="Enter message"
+        placeholder="Your message"
+        controls={register("message", {
           required: true,
           minLength: 2,
         })}
-        asterick={true}
+        asterisk={true}
         errorMsg={
-          (errors.mess?.type === "required" && "Mess is required") ||
-          (errors.mess?.type === "minLength" && "Mess not less then 2 simbol")
+          (errors.message?.type === "required" && "Message is required") ||
+          (errors.message?.type === "minLength" &&
+            "The message must be at least 2 characters")
         }
       />
-      <Checkbox label="Switch" controls={register("sw")} />
-    </>
-  );
+      <Switch label="Agree" controls={register("agree")} />
+      <RadioGroup
+        label="Choose your gender"
+        name="gender"
+        defaultValue={undefined}
+        variant="horizontal"
+        radioList={genderList}
+        control={control}
+      />
+      <button type="submit">Submit</button>
+    </form> */
 }
 
 export default App;
