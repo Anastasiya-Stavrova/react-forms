@@ -1,7 +1,7 @@
 import { Textarea } from "@mantine/core";
 import { TextAreaProps } from "../../types/componentsProps.tsx";
 
-const TextArea = ({
+const ITextarea = ({
   label,
   placeholder = undefined,
   controls,
@@ -10,7 +10,7 @@ const TextArea = ({
   disabled = false,
 }: TextAreaProps) => {
   return (
-    <div>
+    <div className="component">
       <Textarea
         className={`${errorMsg && "error"}`}
         resize="vertical"
@@ -27,4 +27,4 @@ const TextArea = ({
   );
 };
 
-export default TextArea;
+export default ITextarea;

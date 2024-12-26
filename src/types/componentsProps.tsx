@@ -1,6 +1,11 @@
 import { ReactNode } from "react";
 import { FieldValues } from "react-hook-form";
 
+interface SwitchProps {
+  label?: string;
+  controls: FieldValues;
+}
+
 interface TextAreaProps {
   label?: string;
   placeholder?: string;
@@ -10,4 +15,4 @@ interface TextAreaProps {
   asterick?: boolean;
 }
 
-export type { TextAreaProps };
+export type { TextAreaProps, SwitchProps };
