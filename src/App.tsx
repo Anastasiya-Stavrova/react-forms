@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import TextArea from "./components/TextArea/Textarea.tsx";
-import Switch from "./components/Switch/Switch.tsx";
+import Checkbox from "./components/Checkbox/Checkbox.tsx";
 import "./App.css";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
     criteriaMode: "all",
     defaultValues: {
       mess: "GGGGG",
-      sw: false,
+      sw: true,
     },
   });
   return (
@@ -32,7 +32,7 @@ function App() {
           (errors.mess?.type === "minLength" && "Mess not less then 2 simbol")
         }
       />
-      <Switch label="Switch" controls={register("sw")} />
+      <Checkbox label="Switch" controls={register("sw")} />
     </>
   );
 }

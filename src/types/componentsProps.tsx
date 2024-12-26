@@ -1,10 +1,13 @@
 import { ReactNode } from "react";
 import { FieldValues } from "react-hook-form";
 
-interface SwitchProps {
+interface CheckboxProps {
   label?: string;
   controls: FieldValues;
+  disabled?: boolean;
 }
+
+interface SwitchProps extends CheckboxProps {}
 
 interface TextAreaProps {
   label?: string;
@@ -15,4 +18,4 @@ interface TextAreaProps {
   asterick?: boolean;
 }
 
-export type { TextAreaProps, SwitchProps };
+export type { TextAreaProps, SwitchProps, CheckboxProps };
