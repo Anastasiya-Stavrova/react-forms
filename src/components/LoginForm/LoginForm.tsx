@@ -4,6 +4,7 @@ import { IconAt } from "@tabler/icons-react";
 import "./LoginForm.css";
 import styles from "./LoginForm.module.css";
 import { ILogin } from "../../types/login.ts";
+import getData from "../../utils/getData.ts";
 
 const LoginForm = () => {
   const {
@@ -16,7 +17,7 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
-    console.log(data);
+    console.log(getData(data));
     reset();
   };
 

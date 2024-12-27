@@ -1,9 +1,13 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Input, TextInput } from "@mantine/core";
+import { Group, Input, Radio, TextInput } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 import styles from "./RegisterForm.module.css";
 import { IRegister } from "../../types/register.ts";
 import { IconAt, IconPhone, IconUser } from "@tabler/icons-react";
 import { IMaskInput } from "react-imask";
+import { genderOptions } from "../../consts/genderOptions.ts";
+import { IOption } from "../../types/shared.ts";
+import getData from "../../utils/getData.ts";
 
 const RegisterForm = () => {
   const {
@@ -17,14 +21,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit: SubmitHandler<IRegister> = (data) => {
-    if (
-      (data.phoneNumber && data.phoneNumber.length == 4) ||
-      data.phoneNumber == undefined
-    ) {
-      delete data.phoneNumber;
-    }
-
-    console.log(data);
+    console.log(getData(data));
     reset();
   };
 
@@ -84,7 +81,6 @@ const RegisterForm = () => {
         <div className="component">
           <Controller
             name="phoneNumber"
-            defaultValue={undefined}
             control={control}
             rules={{
               pattern: {
@@ -111,6 +107,47 @@ const RegisterForm = () => {
                   rightSection={<IconPhone size={16} />}
                 />
               </Input.Wrapper>
+            )}
+          />
+        </div>
+        <div className="component">
+          <Controller
+            name="birthDate"
+            control={control}
+            render={({ field }) => (
+              <DateInput {...field} clearable label="Birth date" />
+            )}
+          />
+        </div>
+        <div className="component">
+          <Controller
+            name="gender"
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field }) => (
+              <Radio.Group
+                name="gender"
+                label="Gender"
+                withAsterisk
+                error={
+                  errors.gender?.type === "required" ? "Gender is required" : ""
+                }
+              >
+                <Group mt="xs">
+                  {genderOptions.map((option: IOption, index) => {
+                    return (
+                      <Radio
+                        {...field}
+                        key={index}
+                        value={option.value}
+                        label={option.label}
+                      />
+                    );
+                  })}
+                </Group>
+              </Radio.Group>
             )}
           />
         </div>

@@ -1,11 +1,11 @@
-import { gender } from "./shared";
+import { genderType } from "./shared";
 
 interface IRegister {
   fullName: string;
   email: string;
   phoneNumber?: string;
   birthDate?: Date;
-  gender: gender;
+  gender: genderType;
   country: string;
 }
 
