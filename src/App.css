@@ -27,9 +27,17 @@ textarea:focus {
 div.error .mantine-Input-input:has(> input:focus),
 div.error input:focus,
 div.error textarea:focus {
-  border-color: #fa5252;
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(253, 27, 38, 0.25);
+  border-color: #fa5252 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(253, 27, 38, 0.25) !important;
+}
+
+div.error input::placeholder {
+  color: #adb5bd !important;
+}
+
+div.error div.mantine-TextInput-section svg {
+  stroke: #adb5bd !important;
 }
 
 label {

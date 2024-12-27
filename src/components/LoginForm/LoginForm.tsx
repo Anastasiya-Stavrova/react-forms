@@ -1,12 +1,13 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Input, PasswordInput } from "@mantine/core";
 import { IconAt } from "@tabler/icons-react";
-import "./Login.Form.css";
+import "./LoginForm.css";
 import styles from "./LoginForm.module.css";
 import { ILogin } from "../../types/login.ts";
 
 const LoginForm = () => {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -14,7 +15,10 @@ const LoginForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<ILogin> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ILogin> = (data) => {
+    console.log(data);
+    reset();
+  };
 
   return (
     <div className={styles.modal}>
@@ -35,14 +39,12 @@ const LoginForm = () => {
               errors.email?.type === "required"
                 ? "Email is required"
                 : errors.email?.type === "pattern"
-                ? "Invalid email address"
+                ? errors.email.message
                 : ""
             }
           >
             <Input
-              className={`${errors.email ? "error" : ""} ${
-                styles["login-container"]
-              }`}
+              className={`${errors.email ? "error" : ""} login-input-container`}
               placeholder="Your email"
               {...register("email", {
                 required: true,
@@ -69,9 +71,9 @@ const LoginForm = () => {
             }
           >
             <PasswordInput
-              className={`${errors.password ? "error" : ""} ${
-                styles["login-container"]
-              }`}
+              className={`${
+                errors.password ? "error" : ""
+              } login-input-container`}
               placeholder="Your password"
               {...register("password", {
                 required: true,
@@ -81,13 +83,13 @@ const LoginForm = () => {
           </Input.Wrapper>
         </div>
         <div className={styles["modal-buttons"]}>
-          <a href="#" className={styles["password-link"]}>
+          <a className={styles["password-link"]} href="#">
             Forgot your password?
           </a>
           <button className={styles["login-button"]}>Login</button>
         </div>
         <p className={styles["sign-up"]}>
-          Don't have an account?{" "}
+          Don't have an account?&nbsp;
           <a className={styles["sign-up-link"]} href="#">
             Sign up now
           </a>

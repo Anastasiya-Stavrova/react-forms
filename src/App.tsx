@@ -1,5 +1,6 @@
 import "./App.css";
 import LoginForm from "./components/LoginForm/LoginForm.tsx";
+import RegisterForm from "./components/RegisterForm/RegisterForm.tsx";
 
 enum GenderEnum {
   female = "female",
@@ -33,7 +34,12 @@ function App() {
     { value: GenderEnum.male, label: "М" },
   ]; */
 
-  return <LoginForm />;
+  return (
+    <>
+      <LoginForm />
+      <RegisterForm />
+    </>
+  );
   /* <form onSubmit={handleSubmit(onSubmit)}>
       <TextArea
         label="Enter message"

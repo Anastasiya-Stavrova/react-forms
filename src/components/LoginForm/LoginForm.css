@@ -1,0 +1,5 @@
+div.login-input-container .mantine-Input-input:has(> input:focus),
+div.login-input-container input:focus {
+  border-color: #55311c;
+  box-shadow: 0 0 0 0.25rem rgba(140, 117, 105, 0.25);
+}
