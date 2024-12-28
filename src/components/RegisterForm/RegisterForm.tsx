@@ -144,7 +144,6 @@ const RegisterForm = () => {
             <Controller
               name="birthDate"
               control={control}
-              defaultValue={undefined}
               render={({ field }) => (
                 <DateInput
                   {...field}
@@ -160,6 +159,7 @@ const RegisterForm = () => {
           <Group justify="center" className={styles.row}>
             <Controller
               name="gender"
+              defaultValue={undefined}
               control={control}
               render={({ field }) => (
                 <Radio.Group
@@ -185,6 +185,7 @@ const RegisterForm = () => {
 
             <Controller
               name="country"
+              defaultValue={undefined}
               control={control}
               render={({ field }) => (
                 <Select
