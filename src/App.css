@@ -1,7 +1,3 @@
-.component {
-  margin-bottom: 1rem;
-}
-
 textarea::-webkit-scrollbar {
   display: none;
 }
