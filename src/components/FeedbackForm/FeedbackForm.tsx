@@ -14,10 +14,11 @@ import {
 import { IMessage } from "../../types/message";
 import { IconAt, IconMailFast, IconUser } from "@tabler/icons-react";
 import * as yup from "yup";
+import { advantages } from "../../consts/advantages";
+import getData from "../../utils/getData";
 import "./FeedbackForm.css";
 import styles from "./FeedbackForm.module.css";
 import dishes from "../../assets/img/devices.png";
-import getData from "../../utils/getData";
 
 const FeedbackForm = () => {
   const schema = yup.object().shape({
@@ -102,13 +103,15 @@ const FeedbackForm = () => {
           control={control}
           render={({ field }) => (
             <MultiSelect
+              className={"message-input-container"}
               {...field}
               placeholder={`${
                 field.value?.length === 0 || field.value === undefined
                   ? "Pick out what you like about our place"
                   : ""
               }`}
-              data={["4 – React", "1 – Angular", "3 – Vue", "2 – Svelte"]}
+              radius="md"
+              data={advantages}
               onChange={field.onChange}
             />
           )}
@@ -117,6 +120,7 @@ const FeedbackForm = () => {
         <Space h={space} />
 
         <Textarea
+          className={"message-input-container"}
           autosize
           minRows={6}
           maxRows={6}

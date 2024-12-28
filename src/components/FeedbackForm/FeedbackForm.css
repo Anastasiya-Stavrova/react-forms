@@ -1,6 +1,12 @@
 div.message-input-container .mantine-Input-input:has(> input:focus),
+div.message-input-container .mantine-MultiSelect-input:has(input:focus),
 div.message-input-container input:focus,
 div.message-input-container textarea:focus {
   border-color: #fbcf34;
   box-shadow: 0 0 0 0.25rem rgba(255, 200, 0, 0.25);
+}
+
+.mantine-MultiSelect-input input:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
