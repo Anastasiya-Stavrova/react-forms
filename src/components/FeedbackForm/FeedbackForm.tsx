@@ -136,6 +136,7 @@ const FeedbackForm = () => {
             <Controller
               name="rating"
               control={control}
+              defaultValue={0}
               render={({ field: { onChange, value } }) => (
                 <>
                   <Rating
