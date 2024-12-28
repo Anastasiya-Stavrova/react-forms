@@ -1,6 +1,6 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input, Space } from "@mantine/core";
+import { Center, Input, Rating, Space, Stack, Textarea } from "@mantine/core";
 import { IMessage } from "../../types/message";
 import { IconAt, IconUser } from "@tabler/icons-react";
 import * as yup from "yup";
@@ -20,10 +20,11 @@ const FeedbackForm = () => {
 
     message: yup.string(),
 
-    grade: yup.number(),
+    rating: yup.number().required("Please rate us."),
   });
 
   const {
+    control,
     reset,
     register,
     handleSubmit,
@@ -82,6 +83,47 @@ const FeedbackForm = () => {
         </Input.Wrapper>
 
         <Space h={space} />
+
+        <Textarea
+          autosize
+          minRows={6}
+          maxRows={6}
+          placeholder="Write us your complaint, suggestion or thanks"
+          radius="md"
+          {...register("message")}
+        />
+
+        <Space h={space} />
+
+        <Center>
+          <Stack style={{ gap: "0" }}>
+            <Controller
+              name="rating"
+              defaultValue={undefined}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <>
+                  <Rating
+                    name={"rating"}
+                    onChange={onChange}
+                    value={value}
+                    size="xl"
+                  />
+                  {errors.rating && (
+                    <p
+                      style={{ alignSelf: "center" }}
+                      className="m_8f816625 mantine-InputWrapper-error"
+                    >
+                      {errors.rating.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </Stack>
+        </Center>
+
+        <button>Click</button>
       </form>
     </div>
   );

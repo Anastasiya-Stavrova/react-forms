@@ -2,7 +2,7 @@ interface IMessage {
   fullName: string;
   email: string;
   message?: string;
-  grade?: number;
+  rating: number;
 }
 
 export type { IMessage };
