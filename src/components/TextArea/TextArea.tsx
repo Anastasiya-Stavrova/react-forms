@@ -1,5 +1,5 @@
 import { Textarea } from "@mantine/core";
-import { ITextAreaProps } from "../../types/componentsProps.tsx";
+import { ITextAreaProps } from "../../types/props.tsx";
 
 const ITextarea = ({
   label,

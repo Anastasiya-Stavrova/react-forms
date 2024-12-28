@@ -1,5 +1,5 @@
 import { Checkbox } from "@mantine/core";
-import { ICheckboxProps } from "../../types/componentsProps.tsx";
+import { ICheckboxProps } from "../../types/props.tsx";
 
 const ICheckbox = ({ label, controls, disabled = false }: ICheckboxProps) => {
   return (

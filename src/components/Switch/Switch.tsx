@@ -1,5 +1,5 @@
 import { Switch } from "@mantine/core";
-import { ISwitchProps } from "../../types/componentsProps.tsx";
+import { ISwitchProps } from "../../types/props.tsx";
 
 const ISwitch = ({ label, controls, disabled = false }: ISwitchProps) => {
   return (

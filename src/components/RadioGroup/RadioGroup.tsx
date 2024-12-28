@@ -1,5 +1,5 @@
 import { Radio, Group } from "@mantine/core";
-import { IRadioProps, IOption } from "../../types/componentsProps.tsx";
+import { IRadioProps, IOption } from "../../types/props.tsx";
 import styles from "./RadioGroup.module.css";
 import { Controller } from "react-hook-form";
 

@@ -1,3 +1,4 @@
+import countryList from "react-select-country-list";
 import { objectType } from "../types/shared";
 
 const getData = (data: objectType) => {
@@ -9,6 +10,10 @@ const getData = (data: objectType) => {
 
       if (key === "phoneNumber" && field && field.length === 4) {
         field = "";
+      }
+
+      if (key === "country") {
+        field = countryList().getLabel(field);
       }
 
       if (field && field !== "") {

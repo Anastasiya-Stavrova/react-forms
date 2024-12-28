@@ -8,6 +8,7 @@ import { IMaskInput } from "react-imask";
 import { genderOptions } from "../../consts/genderOptions.ts";
 import { IOption } from "../../types/shared.ts";
 import getData from "../../utils/getData.ts";
+import CountrySelect from "../CountrySelect/CountrySelect.tsx";
 
 const RegisterForm = () => {
   const {
@@ -149,6 +150,13 @@ const RegisterForm = () => {
                 </Group>
               </Radio.Group>
             )}
+          />
+        </div>
+        <div className="component">
+          <Controller
+            name="country"
+            control={control}
+            render={({ field }) => <CountrySelect control={field} />}
           />
         </div>
 

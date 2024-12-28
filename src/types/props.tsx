@@ -1,5 +1,14 @@
 import { ReactNode } from "react";
-import { Control, FieldValues } from "react-hook-form";
+import { Control, ControllerRenderProps, FieldValues } from "react-hook-form";
+import { IRegister } from "./register";
+
+interface CountrySelectProps {
+  label?: string;
+  placeholder?: string;
+  control: ControllerRenderProps<IRegister, any>;
+  asterisk?: boolean;
+  errorMsg?: string;
+}
 
 type RadioVariant = "vertical" | "horizontal";
 
@@ -45,10 +54,4 @@ interface ITextAreaProps {
   asterisk?: boolean;
 }
 
-export type {
-  ITextAreaProps,
-  ISwitchProps,
-  ICheckboxProps,
-  IOption,
-  IRadioProps,
-};
+export type { CountrySelectProps };
