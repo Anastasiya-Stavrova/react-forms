@@ -4,6 +4,7 @@
   display: flex;
   width: fit-content;
   height: fit-content;
+  max-width: 540px;
 }
 
 .modal-left {
@@ -43,7 +44,7 @@
 }
 
 .feedback-form {
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 2rem 2rem;
   width: fit-content;
 }
 
@@ -51,4 +52,25 @@
   font-weight: 600;
   text-transform: uppercase;
   text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: end;
+}
+
+.feedback-button {
+  text-transform: uppercase;
+  outline: none;
+  padding: 0.5rem 1.25rem;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.feedback-button:hover {
+  transform: scale(1.05);
 }

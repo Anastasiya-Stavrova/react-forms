@@ -20,6 +20,11 @@ textarea:focus {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+.mantine-MultiSelect-input input:focus {
+  border-color: none;
+  box-shadow: none;
+}
+
 div.error .mantine-Input-input:has(> input:focus),
 div.error input:focus,
 div.error textarea:focus {

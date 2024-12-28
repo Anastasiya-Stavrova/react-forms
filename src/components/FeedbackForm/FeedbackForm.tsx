@@ -1,8 +1,18 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Center, Input, Rating, Space, Stack, Textarea } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Input,
+  Rating,
+  rem,
+  Space,
+  Stack,
+  Textarea,
+  MultiSelect,
+} from "@mantine/core";
 import { IMessage } from "../../types/message";
-import { IconAt, IconUser } from "@tabler/icons-react";
+import { IconAt, IconMailFast, IconUser } from "@tabler/icons-react";
 import * as yup from "yup";
 import "./FeedbackForm.css";
 import styles from "./FeedbackForm.module.css";
@@ -20,7 +30,9 @@ const FeedbackForm = () => {
 
     message: yup.string(),
 
-    rating: yup.number().required("Please rate us."),
+    rating: yup.number().required("Please give us a rating"),
+
+    pros: yup.array(),
   });
 
   const {
@@ -84,6 +96,26 @@ const FeedbackForm = () => {
 
         <Space h={space} />
 
+        <Controller
+          name="pros"
+          defaultValue={[]}
+          control={control}
+          render={({ field }) => (
+            <MultiSelect
+              {...field}
+              placeholder={`${
+                field.value?.length === 0 || field.value === undefined
+                  ? "Pick out what you like about our place"
+                  : ""
+              }`}
+              data={["4 – React", "1 – Angular", "3 – Vue", "2 – Svelte"]}
+              onChange={field.onChange}
+            />
+          )}
+        />
+
+        <Space h={space} />
+
         <Textarea
           autosize
           minRows={6}
@@ -99,7 +131,6 @@ const FeedbackForm = () => {
           <Stack style={{ gap: "0" }}>
             <Controller
               name="rating"
-              defaultValue={undefined}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <>
@@ -123,7 +154,21 @@ const FeedbackForm = () => {
           </Stack>
         </Center>
 
-        <button>Click</button>
+        <Space h="xl" />
+
+        <div className={styles["button-container"]}>
+          <Button
+            type="submit"
+            className={styles["feedback-button"]}
+            variant="gradient"
+            gradient={{ from: "yellow", to: "orange", deg: 90 }}
+            rightSection={
+              <IconMailFast style={{ width: rem(30), height: rem(30) }} />
+            }
+          >
+            Send
+          </Button>
+        </div>
       </form>
     </div>
   );

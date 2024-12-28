@@ -1,12 +1,20 @@
 import { ControllerRenderProps } from "react-hook-form";
 import { IOption } from "./shared";
 
-interface ICountrySelectProps {
+interface ISelectProps {
   label?: string;
-  placeholder?: string;
-  control: ControllerRenderProps<any, any>;
   asterisk?: boolean;
+  placeholder?: string;
   errorMsg?: string;
+}
+
+interface IMultiSelectProps extends ISelectProps {
+  name: string;
+  optionsList: Array<string>;
+}
+
+interface ICountrySelectProps extends ISelectProps {
+  control: ControllerRenderProps<any, any>;
 }
 
 interface IRadioProps {
@@ -18,4 +26,4 @@ interface IRadioProps {
   optionsList: Array<IOption>;
 }
 
-export type { ICountrySelectProps, IRadioProps };
+export type { ICountrySelectProps, IRadioProps, IMultiSelectProps };
