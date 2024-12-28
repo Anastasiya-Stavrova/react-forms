@@ -1,5 +1,13 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Group, Input, Radio, TextInput } from "@mantine/core";
+import {
+  Anchor,
+  Checkbox,
+  Group,
+  Input,
+  PasswordInput,
+  Radio,
+  TextInput,
+} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import styles from "./RegisterForm.module.css";
 import { IRegister } from "../../types/register.ts";
@@ -12,6 +20,7 @@ import CountrySelect from "../CountrySelect/CountrySelect.tsx";
 
 const RegisterForm = () => {
   const {
+    watch,
     reset,
     control,
     register,
@@ -21,10 +30,15 @@ const RegisterForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<IRegister> = (data) => {
-    console.log(getData(data));
+  const onSubmit: SubmitHandler<IRegister> = (data: IRegister) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { cpassword, agreement, ...rest } = data;
+
+    console.log(getData(rest));
     reset();
   };
+
+  const password = watch("password");
 
   return (
     <div className={styles.modal}>
@@ -157,6 +171,75 @@ const RegisterForm = () => {
             name="country"
             control={control}
             render={({ field }) => <CountrySelect control={field} />}
+          />
+        </div>
+        <div className="component">
+          <PasswordInput
+            className={`${errors.password ? "error" : ""}`}
+            label="Password"
+            withAsterisk
+            {...register("password", {
+              required: true,
+              pattern: {
+                value: /^.{6,}$/,
+                message: "Password must be at least 6 characterss",
+              },
+            })}
+            error={
+              errors.password?.type === "required"
+                ? "Password is required"
+                : errors.password?.type === "pattern"
+                ? errors.password.message
+                : ""
+            }
+          />
+        </div>
+        <div className="component">
+          <PasswordInput
+            className={`${errors.cpassword ? "error" : ""}`}
+            label="Confirm Password"
+            withAsterisk
+            {...register("cpassword", {
+              required: true,
+              validate: (value) => {
+                return password === value || "Passwords must match!";
+              },
+            })}
+            error={
+              errors.cpassword?.type === "required"
+                ? "Confirm Password is required"
+                : errors.cpassword?.type === "validate"
+                ? errors.cpassword.message
+                : ""
+            }
+          />
+        </div>
+        <div className="component">
+          <Checkbox
+            className={`${errors.agreement ? "error" : ""}`}
+            label={
+              <>
+                I agree to the{" "}
+                <Anchor
+                  href="#"
+                  style={{
+                    color: "rgb(13, 110, 253)",
+                  }}
+                >
+                  terms and conditions
+                </Anchor>
+              </>
+            }
+            {...register("agreement", {
+              validate: (value) => {
+                return value || "You must agree!";
+              },
+            })}
+            error={
+              errors.agreement?.type === "validate"
+                ? errors.agreement.message
+                : ""
+            }
           />
         </div>
 

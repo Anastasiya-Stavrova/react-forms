@@ -12,7 +12,7 @@ const getData = (data: objectType) => {
         field = "";
       }
 
-      if (key === "country") {
+      if (key === "country" && field) {
         field = countryList().getLabel(field);
       }
 
