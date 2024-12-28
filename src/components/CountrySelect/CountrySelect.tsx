@@ -1,7 +1,7 @@
 import { Select } from "@mantine/core";
 import { useMemo } from "react";
 import countryList from "react-select-country-list";
-import { CountrySelectProps } from "../../types/props";
+import { ICountrySelectProps } from "../../types/props";
 
 const CountrySelect = ({
   label = "Country",
@@ -9,7 +9,7 @@ const CountrySelect = ({
   control,
   asterisk = false,
   errorMsg,
-}: CountrySelectProps) => {
+}: ICountrySelectProps) => {
   const options = useMemo(() => countryList().getData(), []);
 
   return (

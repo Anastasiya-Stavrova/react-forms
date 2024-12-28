@@ -1,12 +1,21 @@
 import { ControllerRenderProps } from "react-hook-form";
-import { IRegister } from "./register";
+import { IOption } from "./shared";
 
-interface CountrySelectProps {
+interface ICountrySelectProps {
   label?: string;
   placeholder?: string;
-  control: ControllerRenderProps<IRegister, any>;
+  control: ControllerRenderProps<any, any>;
   asterisk?: boolean;
   errorMsg?: string;
 }
 
-export type { CountrySelectProps };
+interface IRadioProps {
+  name: string;
+  label: string;
+  control: ControllerRenderProps<any, any>;
+  asterisk?: boolean;
+  errorMsg?: string;
+  optionsList: Array<IOption>;
+}
+
+export type { ICountrySelectProps, IRadioProps };
