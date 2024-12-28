@@ -22,12 +22,12 @@ import dishes from "../../assets/img/devices.png";
 
 const FeedbackForm = () => {
   const schema = yup.object().shape({
-    fullName: yup.string().required("Full name is required!"),
+    fullName: yup.string().required("Full name is required"),
 
     email: yup
       .string()
-      .required("Email is required!")
-      .email("Enter a valid email format!"),
+      .required("Email is required")
+      .email("Enter a valid email format"),
 
     message: yup.string(),
 

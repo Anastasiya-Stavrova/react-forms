@@ -12,13 +12,13 @@ const LoginForm = () => {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .required("Email is required!")
-      .email("Enter a valid email format!"),
+      .required("Email is required")
+      .email("Enter a valid email format"),
 
     password: yup
       .string()
-      .required("Password is required!")
-      .min(6, "Password must contain at least 6 characters!"),
+      .required("Password is required")
+      .min(6, "Password must contain at least 6 characters"),
   });
 
   const {

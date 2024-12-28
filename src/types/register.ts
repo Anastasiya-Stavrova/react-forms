@@ -5,8 +5,8 @@ interface IRegister {
   email: string;
   phoneNumber?: string;
   birthDate?: Date;
-  gender: genderType;
-  country: string;
+  gender?: genderType;
+  country?: string;
   password: string;
   cpassword: string;
   agreement: boolean;

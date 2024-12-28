@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Anchor,
@@ -7,39 +8,55 @@ import {
   Input,
   PasswordInput,
   Radio,
+  Select,
   Space,
   TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import styles from "./RegisterForm.module.css";
 import { IRegister } from "../../types/register.ts";
 import { IconAt, IconPhone, IconUser } from "@tabler/icons-react";
 import { IMaskInput } from "react-imask";
 import { genderOptions } from "../../consts/genderOptions.ts";
-import { IOption } from "../../types/shared.ts";
+import { genderType, IOption } from "../../types/shared.ts";
 import { yupResolver } from "@hookform/resolvers/yup";
+import countryList from "react-select-country-list";
 import * as yup from "yup";
 import getData from "../../utils/getData.ts";
-import CountrySelect from "../CountrySelect/CountrySelect.tsx";
+import styles from "./RegisterForm.module.css";
 
 const RegisterForm = () => {
   const schema = yup.object().shape({
-    fullName: yup.string().required("Full name is required!"),
+    fullName: yup.string().required("Full name is required"),
 
     email: yup
       .string()
-      .required("Email is required!")
-      .email("Enter a valid email format!"),
+      .required("Email is required")
+      .email("Enter a valid email format"),
 
-    message: yup.string(),
+    phoneNumber: yup
+      .string()
+      .matches(/^(.{18}|.{4})$/, "Enter the full phone number"),
 
-    rating: yup.number().required("Please give us a rating"),
+    birthDate: yup.date(),
 
-    pros: yup.array(),
+    gender: yup.mixed<genderType>(),
+
+    country: yup.string(),
+
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+
+    cpassword: yup
+      .string()
+      .required("Confirm password is required")
+      .oneOf([yup.ref("password")], "Passwords must match"),
+
+    agreement: yup.boolean().required().oneOf([true], "You must agree"),
   });
 
   const {
-    watch,
     reset,
     control,
     register,
@@ -58,7 +75,7 @@ const RegisterForm = () => {
     reset();
   };
 
-  const password = watch("password");
+  const countries = useMemo(() => countryList().getData(), []);
 
   return (
     <div className={styles.modal}>
@@ -81,15 +98,9 @@ const RegisterForm = () => {
               className={`${errors.fullName ? "error" : ""}`}
               label="Full name"
               withAsterisk
-              error={
-                errors.fullName?.type === "required"
-                  ? "Full name is required"
-                  : ""
-              }
+              error={errors.fullName ? errors.fullName.message : ""}
               placeholder="Enter your full name"
-              {...register("fullName", {
-                required: true,
-              })}
+              {...register("fullName")}
               rightSection={<IconUser size={16} />}
             />
 
@@ -97,24 +108,12 @@ const RegisterForm = () => {
               className={styles.wrapper}
               withAsterisk
               label="Email"
-              error={
-                errors.email?.type === "required"
-                  ? "Email is required"
-                  : errors.email?.type === "pattern"
-                  ? errors.email.message
-                  : ""
-              }
+              error={errors.email ? errors.email.message : ""}
             >
               <Input
                 className={`${errors.email ? "error" : ""}`}
                 placeholder="Enter your email"
-                {...register("email", {
-                  required: true,
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
-                })}
+                {...register("email")}
                 rightSection={<IconAt size={16} />}
               />
             </Input.Wrapper>
@@ -124,21 +123,11 @@ const RegisterForm = () => {
             <Controller
               name="phoneNumber"
               control={control}
-              rules={{
-                pattern: {
-                  value: /^(.{18}|.{4})$/,
-                  message: "Enter the full phone number",
-                },
-              }}
               render={({ field }) => (
                 <Input.Wrapper
                   className={styles.wrapper}
                   label="Phone number"
-                  error={
-                    errors.phoneNumber?.type === "pattern"
-                      ? errors.phoneNumber.message
-                      : ""
-                  }
+                  error={errors.phoneNumber ? errors.phoneNumber.message : ""}
                 >
                   <Input
                     {...field}
@@ -155,11 +144,13 @@ const RegisterForm = () => {
             <Controller
               name="birthDate"
               control={control}
+              defaultValue={undefined}
               render={({ field }) => (
                 <DateInput
                   {...field}
                   clearable
                   label="Birth date"
+                  placeholder="Select your birth date"
                   style={{ width: "210px" }}
                 />
               )}
@@ -170,20 +161,11 @@ const RegisterForm = () => {
             <Controller
               name="gender"
               control={control}
-              rules={{
-                required: true,
-              }}
               render={({ field }) => (
                 <Radio.Group
                   style={{ width: "210px" }}
                   name="gender"
                   label="Gender"
-                  withAsterisk
-                  error={
-                    errors.gender?.type === "required"
-                      ? "Gender is required"
-                      : ""
-                  }
                 >
                   <Group mt="xs">
                     {genderOptions.map((option: IOption, index) => {
@@ -204,7 +186,14 @@ const RegisterForm = () => {
             <Controller
               name="country"
               control={control}
-              render={({ field }) => <CountrySelect control={field} />}
+              render={({ field }) => (
+                <Select
+                  label="Country"
+                  placeholder="Select your country"
+                  data={countries}
+                  {...field}
+                />
+              )}
             />
           </Group>
 
@@ -214,20 +203,8 @@ const RegisterForm = () => {
               style={{ width: "210px" }}
               label="Password"
               withAsterisk
-              {...register("password", {
-                required: true,
-                pattern: {
-                  value: /^.{6,}$/,
-                  message: "Password must be at least 6 characterss",
-                },
-              })}
-              error={
-                errors.password?.type === "required"
-                  ? "Password is required"
-                  : errors.password?.type === "pattern"
-                  ? errors.password.message
-                  : ""
-              }
+              {...register("password")}
+              error={errors.password ? errors.password.message : ""}
             />
 
             <PasswordInput
@@ -235,19 +212,8 @@ const RegisterForm = () => {
               style={{ width: "210px" }}
               label="Confirm Password"
               withAsterisk
-              {...register("cpassword", {
-                required: true,
-                validate: (value) => {
-                  return password === value || "Passwords must match!";
-                },
-              })}
-              error={
-                errors.cpassword?.type === "required"
-                  ? "Confirm Password is required"
-                  : errors.cpassword?.type === "validate"
-                  ? errors.cpassword.message
-                  : ""
-              }
+              {...register("cpassword")}
+              error={errors.cpassword ? errors.cpassword.message : ""}
             />
           </Group>
 
@@ -267,16 +233,8 @@ const RegisterForm = () => {
                   </Anchor>
                 </>
               }
-              {...register("agreement", {
-                validate: (value) => {
-                  return value || "You must agree!";
-                },
-              })}
-              error={
-                errors.agreement?.type === "validate"
-                  ? errors.agreement.message
-                  : ""
-              }
+              {...register("agreement")}
+              error={errors.agreement ? errors.agreement.message : ""}
             />
           </Group>
         </Flex>
