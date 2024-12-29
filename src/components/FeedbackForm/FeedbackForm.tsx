@@ -31,7 +31,7 @@ const FeedbackForm = () => {
 
     message: yup.string(),
 
-    rating: yup.number().required("Please give us a rating"),
+    rating: yup.number().required().min(1, "Please give us a rating"),
 
     pros: yup.array(),
   });

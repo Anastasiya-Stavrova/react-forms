@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Anchor,
@@ -25,6 +25,16 @@ import getData from "../../utils/getData.ts";
 import styles from "./RegisterForm.module.css";
 
 const RegisterForm = () => {
+  const [showComponent, setShowComponent] = useState(true);
+  const [componentKey, setComponentKey] = useState(0);
+  const countries = useMemo(() => countryList().getData(), []);
+
+  const handleShowComponent = () => {
+    setShowComponent((showComponent) => !showComponent);
+    setShowComponent((showComponent) => !showComponent);
+    setComponentKey((prevKey) => prevKey + 1);
+  };
+
   const schema = yup.object().shape({
     fullName: yup.string().required("Full name is required"),
 
@@ -73,9 +83,9 @@ const RegisterForm = () => {
 
     console.log(getData(rest));
     reset();
-  };
 
-  const countries = useMemo(() => countryList().getData(), []);
+    handleShowComponent();
+  };
 
   return (
     <div className={styles.modal}>
@@ -130,72 +140,82 @@ const RegisterForm = () => {
                   error={errors.phoneNumber ? errors.phoneNumber.message : ""}
                 >
                   <Input
-                    {...field}
                     className={`${errors.phoneNumber ? "error" : ""}`}
                     placeholder="Enter your phone number"
                     component={IMaskInput}
                     mask="+7 (000) 000-00-00"
                     rightSection={<IconPhone size={16} />}
+                    {...field}
                   />
                 </Input.Wrapper>
               )}
             />
 
-            <Controller
-              name="birthDate"
-              control={control}
-              render={({ field }) => (
-                <DateInput
-                  {...field}
-                  clearable
-                  label="Birth date"
-                  placeholder="Select your birth date"
-                  style={{ width: "210px" }}
-                />
-              )}
-            />
+            {showComponent && (
+              <Controller
+                name="birthDate"
+                control={control}
+                render={({ field }) => (
+                  <DateInput
+                    key={componentKey}
+                    {...field}
+                    clearable
+                    label="Birth date"
+                    placeholder="Select your birth date"
+                    style={{ width: "210px" }}
+                  />
+                )}
+              />
+            )}
           </Group>
 
           <Group justify="center" className={styles.row}>
-            <Controller
-              name="gender"
-              defaultValue={undefined}
-              control={control}
-              render={({ field }) => (
-                <Radio.Group
-                  style={{ width: "210px" }}
-                  name="gender"
-                  label="Gender"
-                >
-                  <Group mt="xs">
-                    {genderOptions.map((option: IOption, index) => {
-                      return (
-                        <Radio
-                          {...field}
-                          key={index}
-                          value={option.value}
-                          label={option.label}
-                        />
-                      );
-                    })}
-                  </Group>
-                </Radio.Group>
-              )}
-            />
+            {showComponent && (
+              <Controller
+                name="gender"
+                defaultValue={undefined}
+                control={control}
+                render={({ field }) => (
+                  <Radio.Group
+                    key={componentKey}
+                    style={{ width: "210px" }}
+                    name="gender"
+                    label="Gender"
+                  >
+                    <Group mt="xs">
+                      {genderOptions.map((option: IOption, index) => {
+                        return (
+                          <Radio
+                            {...field}
+                            key={index}
+                            value={option.value}
+                            label={option.label}
+                          />
+                        );
+                      })}
+                    </Group>
+                  </Radio.Group>
+                )}
+              />
+            )}
 
-            <Controller
-              name="country"
-              defaultValue={undefined}
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Country"
-                  placeholder="Select your country"
-                  data={countries}
-                  {...field}
-                />
-              )}
-            />
+            {showComponent && (
+              <Controller
+                name="country"
+                defaultValue={undefined}
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    key={componentKey}
+                    label="Country"
+                    placeholder="Select your country"
+                    searchable
+                    data={countries}
+                    {...field}
+                  />
+                )}
+              />
+            )}
           </Group>
 
           <Group justify="center" className={styles.row}>
@@ -203,6 +223,7 @@ const RegisterForm = () => {
               className={`${errors.password ? "error" : ""}`}
               style={{ width: "210px" }}
               label="Password"
+              placeholder="Enter your password"
               withAsterisk
               {...register("password")}
               error={errors.password ? errors.password.message : ""}
@@ -212,6 +233,7 @@ const RegisterForm = () => {
               className={`${errors.cpassword ? "error" : ""}`}
               style={{ width: "210px" }}
               label="Confirm Password"
+              placeholder="Confirm your password"
               withAsterisk
               {...register("cpassword")}
               error={errors.cpassword ? errors.cpassword.message : ""}
