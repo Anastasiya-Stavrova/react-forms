@@ -25,15 +25,8 @@ import getData from "../../utils/getData.ts";
 import styles from "./RegisterForm.module.css";
 
 const RegisterForm = () => {
-  const [showComponent, setShowComponent] = useState(true);
   const [componentKey, setComponentKey] = useState(0);
   const countries = useMemo(() => countryList().getData(), []);
-
-  const handleShowComponent = () => {
-    setShowComponent((showComponent) => !showComponent);
-    setShowComponent((showComponent) => !showComponent);
-    setComponentKey((prevKey) => prevKey + 1);
-  };
 
   const schema = yup.object().shape({
     fullName: yup.string().required("Full name is required"),
@@ -84,7 +77,7 @@ const RegisterForm = () => {
     console.log(getData(rest));
     reset();
 
-    handleShowComponent();
+    setComponentKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -150,72 +143,66 @@ const RegisterForm = () => {
                 </Input.Wrapper>
               )}
             />
-
-            {showComponent && (
-              <Controller
-                name="birthDate"
-                control={control}
-                render={({ field }) => (
-                  <DateInput
-                    key={componentKey}
-                    {...field}
-                    clearable
-                    label="Birth date"
-                    placeholder="Select your birth date"
-                    style={{ width: "210px" }}
-                  />
-                )}
-              />
-            )}
+            <Controller
+              name="birthDate"
+              control={control}
+              render={({ field }) => (
+                <DateInput
+                  key={componentKey}
+                  {...field}
+                  clearable
+                  label="Birth date"
+                  placeholder="Select your birth date"
+                  style={{ width: "210px" }}
+                />
+              )}
+            />
           </Group>
 
           <Group justify="center" className={styles.row}>
-            {showComponent && (
-              <Controller
-                name="gender"
-                defaultValue={undefined}
-                control={control}
-                render={({ field }) => (
-                  <Radio.Group
-                    key={componentKey}
-                    style={{ width: "210px" }}
-                    name="gender"
-                    label="Gender"
-                  >
-                    <Group mt="xs">
-                      {genderOptions.map((option: IOption, index) => {
-                        return (
-                          <Radio
-                            {...field}
-                            key={index}
-                            value={option.value}
-                            label={option.label}
-                          />
-                        );
-                      })}
-                    </Group>
-                  </Radio.Group>
-                )}
-              />
-            )}
+            <Controller
+              name="gender"
+              defaultValue={undefined}
+              control={control}
+              render={({ field }) => (
+                <Radio.Group
+                  key={componentKey}
+                  style={{ width: "210px" }}
+                  name="gender"
+                  label="Gender"
+                >
+                  <Group mt="xs">
+                    {genderOptions.map((option: IOption, index) => {
+                      return (
+                        <Radio
+                          {...field}
+                          key={index}
+                          value={option.value}
+                          label={option.label}
+                        />
+                      );
+                    })}
+                  </Group>
+                </Radio.Group>
+              )}
+            />
 
-            {showComponent && (
-              <Controller
-                name="country"
-                defaultValue={undefined}
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    key={componentKey}
-                    label="Country"
-                    placeholder="Select your country"
-                    searchable
-                    data={countries}
-                    {...field}
-                  />
-                )}
-              />
-            )}
+            <Controller
+              name="country"
+              defaultValue={undefined}
+              control={control}
+              render={({ field }) => (
+                <Select
+                  key={componentKey}
+                  label="Country"
+                  placeholder="Select your country"
+                  searchable
+                  nothingFoundMessage="Nothing found..."
+                  data={countries}
+                  {...field}
+                />
+              )}
+            />
           </Group>
 
           <Group justify="center" className={styles.row}>
