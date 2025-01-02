@@ -1,6 +1,7 @@
 # React Forms
 
-### Working with forms and learning new technologies: 
+### :hammer_and_wrench: Working with forms and learning new technologies: 
+
 - Library "react-hook-form"
 - Library "react-imask"
 - Library "yup"
